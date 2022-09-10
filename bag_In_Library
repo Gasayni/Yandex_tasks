@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        String input = readFile("input.txt");
+
+
+        String[] inputArr = input.split("\n");
+        Map<Integer, String> map = new TreeMap<>();
+        for (int i = 0; i < inputArr.length; i++) {
+            String[] symbolArr = inputArr[i].split("");
+            int index = -1;
+            StringBuilder stringBuilder = new StringBuilder("");
+            for (int j = 0; j < symbolArr.length; j++) {
+                try {
+                    index = Integer.parseInt(symbolArr[j]);
+                } catch (Exception e) {
+                    stringBuilder.append(symbolArr[j]);
+                }
+            }
+            map.put(index, stringBuilder.toString());
+        }
+        map.values().stream().forEach(System.out::println);
+    }
+
+    public static String readFile(String path) {
+        StringBuilder finishTextFromFile = new StringBuilder();
+        String readableLine;
+        try {
+            FileReader file = new FileReader(path);
+            BufferedReader br = new BufferedReader(file);
+            while ((readableLine = br.readLine()) != null) {
+                finishTextFromFile.append(readableLine).append("\n");
+            }
+            br.close();
+            file.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return finishTextFromFile.toString();
+    }
+}
